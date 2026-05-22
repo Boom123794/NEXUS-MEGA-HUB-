@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS MEGA HUB - ANGPAO WALLET SYSTEM</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-main: #060913;
+            --bg-card: #0d1326;
+            --bg-nav: #111936;
+            --primary: #00f0ff;
+            --secondary: #7000ff;
+            --text: #f1f5f9;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            --success: #00e676;
+            --danger: #ff1744;
+            --warning: #ffea00;
+            --angpao: #ff2a4b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text); padding-bottom: 60px; }
+
+        /* --- ANNOUNCEMENT BANNER --- */
+        .announcement { background: linear-gradient(90deg, #7000ff, #00f0ff); color: #000; padding: 8px; font-weight: 600; font-size: 13px; text-align: center; }
+
+        /* --- NAVIGATION --- */
+        nav { background: var(--bg-nav); padding: 1rem; border-bottom: 2px solid var(--border); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+        .nav-top { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--primary); text-decoration: none; cursor: pointer; }
+        .logo-box { background: linear-gradient(45deg, var(--primary), var(--secondary)); padding: 3px 8px; border-radius: 4px; color: #fff; font-size: 12px; }
+        .user-profile-status { display: flex; align-items: center; gap: 8px; }
+        .wallet { background: rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+
+        .nav-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; background: rgba(0,0,0,0.2); padding: 4px; border-radius: 8px; border: 1px solid var(--border); }
+        .nav-item { color: #fff; opacity: 0.7; text-decoration: none; font-size: 12px; font-weight: 500; text-align: center; padding: 8px 2px; border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .nav-item:hover, .nav-item.active { opacity: 1; background: var(--secondary); color: #fff; }
+
+        .container { max-width: 1200px; margin: 1.5rem auto; padding: 0 1rem; }
+        h2.section-title { font-size: 20px; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+
+        /* --- PAGES --- */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* --- STOREFRONT & CARDS --- */
+        .grid-products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+        .card { background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; position: relative; display: flex; flex-direction: column; }
+        .card:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(0,240,255,0.15); }
+        .card-banner-img { height: 150px; width: 100%; object-fit: cover; border-bottom: 1px solid var(--border); }
+        .card-content { padding: 1.2rem; flex-grow: 1; }
+        .card-title { font-size: 16px; font-weight: 600; margin: 0.4rem 0; line-height: 1.4; }
+        .card-specs { background: rgba(0,0,0,0.15); padding: 10px; border-radius: 8px; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+        .card-specs li { display: flex; justify-content: space-between; }
+        .card-action { padding: 1rem; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+        .card-price { font-size: 20px; font-weight: 700; color: var(--success); }
+
+        .btn { border: none; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-buy { background: var(--success); color: #000; }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-admin { background: var(--primary); color: #000; width: 100%; padding: 10px; margin-top: 5px; }
+
+        /* --- REDEEM BOX --- */
+        .coupon-box { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; background: rgba(0, 240, 255, 0.05); padding: 15px; border-radius: 12px; border: 1px dashed var(--primary); }
+        .coupon-input-group { display: flex; gap: 8px; }
+
+        /* --- AUTH MODAL --- */
+        .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 9, 19, 0.96); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .auth-box { background: var(--bg-card); border: 2px solid var(--primary); border-radius: 16px; padding: 1.5rem; width: 100%; max-width: 400px; }
+        .auth-tabs { display: flex; gap: 10px; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .auth-tab { font-size: 15px; font-weight: 600; color: var(--text-muted); cursor: pointer; padding-bottom: 5px; }
+        .auth-tab.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+
+        /* --- ADMIN PANEL LAYOUT --- */
+        .admin-layout { display: flex; flex-direction: column; gap: 1.5rem; }
+        .admin-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .admin-tab-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-muted); padding: 10px 2px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: 500; cursor: pointer; }
+        .admin-tab-btn.active { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+        
+        /* STATS DASHBOARD */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 1.5rem; }
+        .dash-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 10px; border-radius: 8px; text-align: center; }
+        .dash-box p { font-size: 11px; color: var(--text-muted); }
+        .dash-box h4 { font-size: 16px; color: var(--primary); margin-top: 2px; }
+
+        .form-group { display: flex; flex-direction: column; margin-bottom: 0.8rem; }
+        .form-group label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+        .form-group input, .form-group select { background: var(--bg-main); border: 1px solid var(--border); padding: 8px; border-radius: 8px; color: #fff; font-size: 13px; }
+
+        .table-wrapper { overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--primary); background: rgba(0,0,0,0.3); }
+
+        /* WHEEL UI */
+        .wheel-panel { text-align: center; max-width: 450px; margin: 0 auto; background: var(--bg-card); padding: 1.5rem; border-radius: 14px; border: 1px solid var(--primary); }
+        .wheel-item-display { width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 2px solid var(--primary); margin: 10px auto; display: none; }
+        .wheel-circle { width: 140px; height: 140px; border-radius: 50%; border: 6px solid var(--secondary); margin: 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; background: #000; box-shadow: 0 0 15px var(--primary); }
+
+        .delivery-alert { background: #042f1a; border: 2px solid var(--success); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; display: none; }
+
+        @media (min-width: 768px) {
+            .nav-container { flex-direction: row; justify-content: space-between; align-items: center; }
+            .nav-menu { grid-template-columns: repeat(4, auto); gap: 10px; }
+            .nav-item { padding: 8px 16px; flex-direction: row; font-size: 14px; }
+            .admin-layout { display: grid; grid-template-columns: 220px 1fr; }
+            .admin-tabs { display: flex; flex-direction: column; }
+            .admin-tab-btn { font-size: 13px; text-align: left; padding: 10px; }
+            .dashboard-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="auth-screen" class="auth-overlay">
+        <div class="auth-box">
+            <div style="text-align:center; margin-bottom:1rem;">
+                <h2 style="color:var(--primary);">NEXUS REGISTER</h2>
+                <p style="font-size:12px; color:var(--text-muted);">ระบบสมัครสมาชิกเข้าซื้อไอดีออโต้</p>
+            </div>
+            <div class="auth-tabs">
+                <div id="tab-reg" class="auth-tab active" onclick="toggleAuthTab('reg')">สมัครสมาชิก</div>
+                <div id="tab-login" class="auth-tab" onclick="toggleAuthTab('login')">เข้าสู่ระบบ</div>
+            </div>
+
+            <div id="auth-form-body">
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้งาน (Username)</label>
+                    <input type="text" id="auth-user" placeholder="ภาษาอังกฤษหรือตัวเลข">
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน (Password)</label>
+                    <input type="password" id="auth-pass" placeholder="กำหนดรหัสผ่าน">
+                </div>
+                <div class="form-group" id="confirm-password-group">
+                    <label>ยืนยันรหัสผ่านอีกครั้ง (Confirm Password)</label>
+                    <input type="password" id="auth-pass-confirm" placeholder="กรอกรหัสผ่านให้ตรงกัน">
+                </div>
+                <button class="btn" style="background:var(--primary); color:#000; width:100%; padding:10px; font-weight:700; margin-top:5px;" onclick="handleAuthSubmit()">
+                    <span id="auth-btn-text">ดำเนินการสมัครสมาชิก 🚀</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="announcement" id="web-marquee">
+        🔥 ยินดีต้อนรับสู่ NEXUS MEGA HUB แหล่งรวมไอดีไก่ตันราคาประหยัด บอทส่งของไวใน 1 วินาที!
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-top">
+                <a class="logo" onclick="switchPage('store')">
+                    <div class="logo-box">NEXUS</div><span>MEGA HUB</span>
+                </a>
+                <div class="user-profile-status">
+                    <span id="user-display-name" style="font-weight:600; font-size:13px; color:var(--primary);">ผู้เยี่ยมชม</span>
+                    <div class="wallet">💰 <span id="credit-num" style="color:var(--success); font-weight:700;">0</span> ฿</div>
+                </div>
+            </div>
+            <div class="nav-menu">
+                <div id="m-store" class="nav-item active" onclick="switchPage('store')"><span>🛒</span><span>หน้าร้าน</span></div>
+                <div id="m-wheel" class="nav-item" onclick="switchPage('wheel')"><span>🎡</span><span>วงล้อสุ่ม</span></div>
+                <div id="m-topup" class="nav-item" onclick="switchPage('topup')"><span>🧧</span><span>เติมซองอั่งเปา</span></div>
+                <div id="m-admin" class="nav-item" style="color:var(--primary);" onclick="checkAdminPassword()"><span>⚙️</span><span>หลังบ้าน</span></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div id="delivery-box" class="delivery-alert">
+            <h4 style="color:var(--success); margin-bottom:5px;">⚡ บอทอัตโนมัติจัดส่งไอดีเรียบร้อย:</h4>
+            <div id="delivery-code" style="background:rgba(0,0,0,0.3); padding:10px; border-radius:6px; font-family:monospace; font-size:13px; white-space:pre-line;"></div>
+        </div>
+
+        <div id="page-store" class="page active">
+            <div class="coupon-box">
+                <label style="font-size:13px; font-weight:600; color:var(--primary); margin-bottom:2px;">🎁 เติมโค้ดรับเครดิตฟรี (Redeem Gift Code)</label>
+                <div class="coupon-input-group">
+                    <input type="text" id="coupon-input" placeholder="กรอกโค้ดรับเงิน เช่นรหัสที่แอดมินแจก..." style="flex-grow:1; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; color:#fff; font-size:13px;">
+                    <button class="btn" style="background:var(--success); color:#000;" onclick="redeemCashCodeEngine()">🔑 เติมโค้ดรับเงิน</button>
+                </div>
+            </div>
+            
+            <h2 class="section-title">📦 รายการไอดีสต็อกพร้อมส่งด่วน</h2>
+            <div class="grid-products" id="store-grid"></div>
+        </div>
+
+        <div id="page-wheel" class="page">
+            <div class="wheel-panel">
+                <h3>🎡 วงล้อสุ่มอนิเมะ & ไก่ตันระดับเทพ</h3>
+                <p style="font-size:12px; color:var(--text-muted); margin-bottom:1rem;">หักเครดิตครั้งละ 50 บาท สุ่มไอดีตามเรทโอกาสหลังบ้าน</p>
+                <div class="wheel-circle" id="wheel-display">?</div>
+                <img id="wheel-prize-img" class="wheel-item-display" src="">
+                <button class="btn btn-buy" style="width:100%; padding:12px; margin-top:10px;" onclick="spinWheelEngine()">🔥 เริ่มสุ่มวงล้อ (50 ฿)</button>
+            </div>
+        </div>
+
+        <div id="page-topup" class="page">
+            <div class="wheel-panel" style="max-width:500px; border-color: var(--angpao);">
+                <h3 style="color: var(--angpao);">🧧 เติมเงินผ่านซองอั่งเปา TrueMoney Wallet</h3>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:5px; margin-bottom:1.5rem;">สร้างซองอั่งเปาแบบแบ่งเงินเท่ากัน (กรอก 1 คน) แล้วคัดลอกลิงก์มาวางด้านล่างได้เลย</p>
+                
+                <div class="form-group" style="text-align:left;">
+                    <label style="color: #fff;">วางลิงก์ซองอั่งเปาตรงนี้</label>
+                    <input type="text" id="angpao-link-input" placeholder="https://gift.truemoney.com/campaign/?v=..." style="border-color: rgba(255,42,75,0.4); padding:12px;">
+                </div>
+                
+                <button class="btn" style="background: var(--angpao); color: #fff; width: 100%; padding: 12px; font-weight: bold; font-size: 14px; margin-top: 5px;" onclick="submitAngpaoLinkEngine()">
+                    🚀 ส่งลิงก์ให้บอทตรวจสอบซอง
+                </button>
+                
+                <div id="topup-msg"></div>
+            </div>
+        </div>
+
+        <div id="page-admin" class="page">
+            <h2 class="section-title">⚙️ ระบบควบคุมและฐานข้อมูลหลังบ้านแอดมิน</h2>
+            
+            <div class="admin-layout">
+                <div class="admin-tabs">
+                    <div id="ad-t1" class="admin-tab-btn active" onclick="switchAdminTab('t1')">📊 สถิติ & ออเดอร์</div>
+                    <div id="ad-t2" class="admin-tab-btn" onclick="switchAdminTab('t2')">📦 จัดการสต็อกสินค้า</div>
+                    <div id="ad-t3" class="admin-tab-btn" onclick="switchAdminTab('t3')">🎡 ตั้งค่าเรทวงล้อ</div>
+                    <div id="ad-t4" class="admin-tab-btn" onclick="switchAdminTab('t4')">👥 สมาชิก & เติมเงิน</div>
+                    <div id="ad-t5" class="admin-tab-btn" onclick="switchAdminTab('t5')">🎫 โค้ดรับเงิน & ประกาศ</div>
+                </div>
+
+                <div class="admin-content">
+                    <div id="tab-content-t1" class="admin-sub" style="display:block;">
+                        <div class="dashboard-grid">
+                            <div class="dash-box"><p>💰 ยอดขายวันนี้</p><h4 id="stat-sales-today">0 ฿</h4></div>
+                            <div class="dash-box"><p>📅 ยอดเดือนนี้</p><h4 id="stat-sales-month">0 ฿</h4></div>
+                            <div class="dash-box"><p>📈 กำไรรวม</p><h4 style="color:var(--success);" id="stat-profit">0 ฿</h4></div>
+                            <div class="dash-box"><p>👥 จำนวนลูกค้า</p><h4 id="stat-users-count">1 คน</h4></div>
+                            <div class="dash-box"><p>🏆 สินค้าขายดี</p><h4 id="stat-best-seller" style="font-size:12px; color:var(--warning);">ยังไม่มี</h4></div>
+                            <div class="dash-box"><p>🟢 คนออนไลน์</p><h4 style="color:var(--success);">3 คน</h4></div>
+                        </div>
+                        <h4>📜 ประวัติออเดอร์ล่าสุดและการส่งบอท</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead><tr><th>เลขบิล</th><th>ลูกค้า</th><th>รายการสินค้า</th><th>ราคา</th><th>สถานะบอท</th></tr></thead>
+                                <tbody id="admin-orders-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="tab-content-t2" class="admin-sub" style="display:none;">
+                        <h4>📦 เพิ่ม / อัปเดตสินค้าเข้าระบบหน้าร้าน</h4>
+                        <div class="form-group" style="margin-top:10px;">
+                            <label>ชื่อสินค้าหน้าร้าน</label>
+                            <input type="text" id="in-title" placeholder="เช่น ไก่ตัน Blox Fruit มังกรตื่น">
+                        </div>
+                        <div class="form-group">
+                            <label>ราคาขาย (บาท)</label>
+                            <input type="number" id="in-price" value="100">
+                        </div>
+                        <div class="form-group">
+                            <label>ลิงก์รูปภาพสินค้า (URL รูปภาพ)</label>
+                            <input type="text" id="in-img" value="https://images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=500">
+                        </div>
+                        <div class="form-group">
+                            <label>เลเวลในเกม</label>
+                            <input type="text" id="in-lv" value="MAX">
+                        </div>
+                        <div class="form-group">
+                            <label>ข้อมูลสำคัญ/ผลหลัก</label>
+                            <input type="text" id="in-fruit" value="ผลโมจิตื่นครบสกิล">
+                        </div>
+                        <div class="form-group">
+                            <label>Username สำหรับส่งให้ลูกค้า</label>
+                            <input type="text" id="in-user" placeholder="ไอดีล็อกอิน">
+                        </div>
+                        <div class="form-group">
+                            <label>Password สำหรับส่งให้ลูกค้า</label>
+                            <input type="text" id="in-pass" placeholder="รหัสผ่านล็อกอิน">
+                        </div>
+                        <button class="btn btn-admin" style="background:var(--success)" onclick="addNewProduct()">💾 บันทึกและเปิดขายหน้าร้าน</button>
+                    </div>
+
+                    <div id="tab-content-t3" class="admin-sub" style="display:none;">
+                        <h4>🎡 จัดการไอเทมในวงล้อและปรับเพิ่มโอกาสดรอป (%)</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead><tr><th>ชื่อรางวัลอนิเมะ/ไก่ตัน</th><th>ลิงก์รูปภาพรางวัล</th><th>โอกาสดรอป (%)</th></tr></thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" id="w-item-1" value="ไอดีเกลือ (แต้มสะสม)"></td>
+                                        <td><input type="text" id="w-img-1" value="https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?w=200"></td>
+                                        <td><input type="number" id="w-rate-1" value="70"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="w-item-2" value="ไอดีแแรร์ ผลเสือดาว"></td>
+                                        <td><input type="text" id="w-img-2" value="https://images.unsplash.com/photo-1560942485-b2a11cc13456?w=200"></td>
+                                        <td><input type="number" id="w-rate-2" value="25"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" id="w-item-3" value="🏆 ไอดีมหาเทพ ลิขสิทธิ์แท้"></td>
+                                        <td><input type="text" id="w-img-3" value="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200"></td>
+                                        <td><input type="number" id="w-rate-3" value="5"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="btn btn-admin" onclick="saveWheelRates()">💾 บันทึกการตั้งค่าเรทวงล้อ</button>
+                    </div>
+
+                    <div id="tab-content-t4" class="admin-sub" style="display:none;">
+                        <h4>👥 ตารางการจัดการสมาชิกรายบุคคล</h4>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead><tr><th>ID บัญชี</th><th>ชื่อลูกค้า</th><th>เงินในระบบ</th><th>จัดการเครดิต</th><th>ระบบความปลอดภัย</th></tr></thead>
+                                <tbody id="admin-users-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="tab-content-t5" class="admin-sub" style="display:none;">
+                        <div class="admin-box" style="margin-bottom:1rem;">
+                            <h4>📢 ปรับเปลี่ยนประกาศวิ่งหน้าเว็บไซต์</h4>
+                            <input type="text" id="admin-marquee-input" style="width:100%; background:var(--bg-main); border:1px solid var(--border); padding:8px; margin:5px 0; color:#fff;" value="🔥 ยินดีต้อนรับสู่ NEXUS MEGA HUB แหล่งรวมไอดีไก่ตันราคาประหยัด บอทส่งของไวใน 1 วินาที!">
+                            <button class="btn btn-admin" style="background:var(--warning)" onclick="updateMarquee()">⚡ อัปเดตประกาศทันที</button>
+                        </div>
+
+                        <div class="admin-box" style="margin-bottom:1rem;">
+                            <h4>🎫 ระบบสร้างโค้ดแจกเงินฟรี (Gift Redeem Code)</h4>
+                            <div class="form-group"><label>ชื่อรหัสโค้ด (เช่น FREE50)</label><input type="text" id="cp-code" value="FREE50"></div>
+                            <div class="form-group"><label>มูลค่าเงินที่จะได้รับ (บาท)</label><input type="number" id="cp-cash" value="50"></div>
+                            <button class="btn btn-admin" onclick="saveGiftCashCode()">💾 บันทึกเปิดใช้งานโค้ดแจกเงิน</button>
+                        </div>
+
+                        <div class="admin-box">
+                            <h4>🔐 เปลี่ยนรหัสผ่านเข้าควบคุมหลังบ้าน (Admin Password)</h4>
+                            <div class="form-group"><label>รหัสผ่านใหม่หลังบ้าน</label><input type="text" id="admin-new-pass" value="admin123"></div>
+                            <button class="btn btn-admin" style="background:var(--danger)" onclick="changeAdminPassword()">🔐 บันทึกรหัสหลังบ้านใหม่</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let adminSecretPassword = "admin123";
+        let currentAuthMode = 'reg';
+
+        let activeGiftCode = { code: "FREE50", moneyAmount: 50 };
+        let usedCodesLog = []; 
+        let usedAngpaoLinks = []; // บันทึกประวัติลิงก์ซองอั่งเปาที่เติมไปแล้วเพื่อกันสแปม
+
+        let stats = { salesToday: 0, salesMonth: 0, profit: 0, bestSeller: "ยังไม่มี" };
+
+        let registeredUsers = [
+            { id: 101, username: "customer_test", password: "123", credit: 0 }
+        ];
+        let currentUser = null;
+
+        let products = [
+            { id: 1, title: "ไก่ตัน Blox Fruits ผลโมจิแรร์เลเวลแมกซ์", price: 150, img: "https://images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=500", lv: "2550", fruit: "โมจิตื่นครบเซ็ต", user: "user_blox01", pass: "pass9988" },
+            { id: 2, title: "ไอดีเริ่มต้นแมพอนิเมะ การันตีสุ่ม 5 ดาว", price: 90, img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500", lv: "50", fruit: "โงกุนร่างพระเจ้า", user: "anime_god", pass: "anime7711" }
+        ];
+
+        let orderLogs = [];
+
+        let wheelConfig = [
+            { name: "ไอดีเกลือ (แต้มสะสม)", img: "https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?w=200", rate: 70 },
+            { name: "ไอดีแรร์ ผลเสือดาว", img: "https://images.unsplash.com/photo-1560942485-b2a11cc13456?w=200", rate: 25 },
+            { name: "🏆 ไอดีมหาเทพ ลิขสิทธิ์แท้", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200", rate: 5 }
+        ];
+
+        renderStore();
+        renderAdminData();
+
+        function toggleAuthTab(mode) {
+            currentAuthMode = mode;
+            document.getElementById('tab-reg').classList.toggle('active', mode === 'reg');
+            document.getElementById('tab-login').classList.toggle('active', mode === 'login');
+            document.getElementById('confirm-password-group').style.display = mode === 'reg' ? 'flex' : 'none';
+            document.getElementById('auth-btn-text').innerText = mode === 'reg' ? 'ดำเนินการสมัครสมาชิก 🚀' : 'เข้าสู่ระบบเลย 🔐';
+        }
+
+        function handleAuthSubmit() {
+            let uName = document.getElementById('auth-user').value.trim();
+            let pWord = document.getElementById('auth-pass').value.trim();
+            let pConfirm = document.getElementById('auth-pass-confirm').value.trim();
+
+            if(!uName || !pWord) return alert("❌ กรุณากรอกช่องข้อมูลให้ครบครับ");
+
+            if(currentAuthMode === 'reg') {
+                if(pWord !== pConfirm) return alert("❌ รหัสผ่านทั้งสองช่องไม่ตรงกัน!");
+                if(registeredUsers.find(u => u.username === uName)) return alert("❌ ชื่อไอดีนี้มีผู้ใช้งานแล้ว");
+
+                let newUser = { id: Math.floor(Math.random()*9000+1000), username: uName, password: pWord, credit: 0 };
+                registeredUsers.push(newUser);
+                currentUser = newUser;
+                alert(`🎉 สมัครสมาชิกเสร็จสมบูรณ์! ยินดีต้อนรับคุณ ${uName} เงินเริ่มต้นคือ 0 บาท`);
+            } else {
+                let user = registeredUsers.find(u => u.username === uName && u.password === pWord);
+                if(!user) return alert("❌ ชื่อผู้ใช้หรือรหัสผ่านผิดพลาดครับ!");
+                currentUser = user;
+                alert(`🔐 เข้าใช้งานสำเร็จ ยินดีต้อนรับคุณ ${uName}`);
+            }
+
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('user-display-name').innerText = currentUser.username;
+            updateWalletUI();
+            renderAdminData();
+        }
+
+        function updateWalletUI() {
+            if(currentUser) {
+                document.getElementById('credit-num').innerText = currentUser.credit;
+            }
+        }
+
+        // 🧧 ฟังก์ชันตรวจสอบและจำลองบอทรับซองอั่งเปา TrueMoney Wallet 🧧
+        function submitAngpaoLinkEngine() {
+            if(!currentUser) return alert("❌ กรุณาเข้าสู่ระบบก่อนทำการเติมซองอั่งเปาครับ");
+            
+            let urlInput = document.getElementById('angpao-link-input').value.trim();
+            let msgBox = document.getElementById('topup-msg');
+
+            if(!urlInput) return alert("❌ กรุณากรอกลิงก์ซองอั่งเปาของคุณก่อนครับ!");
+            
+            // ตรวจสอบขั้นต้นว่าใช่ลิงก์อั่งเปาของทรูจริงไหม
+            if(!urlInput.includes("gift.truemoney.com")) {
+                return alert("❌ รูปแบบลิงก์ไม่ถูกต้อง! ต้องเป็นลิงก์ซองอั่งเปาจากแอป TrueMoney Wallet เท่านั้น");
+            }
+
+            // เช็คว่าลิงก์นี้เคยใช้เติมไปแล้วหรือยัง
+            if(usedAngpaoLinks.includes(urlInput)) {
+                msgBox.innerHTML = `<p style="color:var(--danger); margin-top:10px;">❌ บอทปฏิเสธ: ซองอั่งเปานี้ถูกใช้งานไปแล้วในระบบ!</p>`;
+                return;
+            }
+
+            msgBox.innerHTML = `<p style="color:var(--warning); margin-top:10px;">⏳ บอทกำลังดึงข้อมูลและกดยอมรับซองอั่งเปาผ่านระบบจำลอง API...</p>`;
+
+            setTimeout(() => {
+                let mockAmount = 150; // บอทจำลองสุ่มยอดเงินให้ +150 บาท
+                currentUser.credit += mockAmount;
+                updateWalletUI();
+
+                // บันทึกว่าลิงก์นี้ใช้ไปแล้ว
+                usedAngpaoLinks.push(urlInput);
+
+                msgBox.innerHTML = `
+                    <div style="background:rgba(0,230,118,0.1); border:1px solid var(--success); padding:10px; border-radius:8px; margin-top:10px; text-align:left;">
+                        <span style="color:var(--success); font-weight:bold;">✅ บอท TrueMoney รับซองสำเร็จ!</span><br>
+                        <span style="font-size:12px;">เครดิตถูกโอนเข้ากระเป๋าของคุณแล้วจำนวน <strong>+${mockAmount} บาท</strong> เติมเสร็จสรรพเรียบร้อย!</span>
+                    </div>
+                `;
+                document.getElementById('angpao-link-input').value = ""; // ล้างช่องกรอก
+                renderAdminData();
+            }, 1500);
+        }
+
+        function redeemCashCodeEngine() {
+            if(!currentUser) return alert("❌ กรุณาเข้าสู่ระบบสมาชิกก่อนเติมโค้ดครับ");
+            let inputCode = document.getElementById('coupon-input').value.trim();
+            if(!inputCode) return alert("❌ กรุณากรอกรหัสโค้ดก่อนกดปุ่มครับ");
+
+            if(inputCode === activeGiftCode.code) {
+                let checkUsed = usedCodesLog.find(log => log.user === currentUser.username && log.code === inputCode);
+                if(checkUsed) return alert("❌ คุณเคยเติมโค้ดรางวัลนี้ไปแล้ว!");
+
+                currentUser.credit += activeGiftCode.moneyAmount;
+                updateWalletUI();
+                usedCodesLog.push({ user: currentUser.username, code: inputCode });
+                
+                alert(`✅ เติมโค้ดสำเร็จ! ได้รับเงินเครดิตจำนวน +${activeGiftCode.moneyAmount} บาท 💰`);
+                document.getElementById('coupon-input').value = "";
+                renderAdminData();
+            } else {
+                alert("❌ รหัสโค้ดไม่ถูกต้อง!");
+            }
+        }
+
+        function saveGiftCashCode() {
+            let codeName = document.getElementById('cp-code').value.trim();
+            let moneyVal = Number(document.getElementById('cp-cash').value);
+            if(!codeName || moneyVal <= 0) return alert("❌ กรุณาระบุข้อมูลให้ถูกต้อง");
+            activeGiftCode.code = codeName;
+            activeGiftCode.moneyAmount = moneyVal;
+            alert(`🎫 ตั้งค่ารหัส [ ${activeGiftCode.code} ] รับเงินฟรี +${activeGiftCode.moneyAmount} บาท พร้อมใช้งาน!`);
+        }
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(m => m.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            if(document.getElementById('m-' + pageId)) document.getElementById('m-' + pageId).classList.add('active');
+        }
+
+        function checkAdminPassword() {
+            let pass = prompt(`🔐 เข้าถึงสิทธิ์แอดมินสูงสุด:\nกรอกรหัสผ่านหลังบ้าน:`);
+            if(pass === adminSecretPassword) switchPage('admin');
+            else if(pass !== null) alert("❌ รหัสผ่านหลังบ้านไม่ถูกต้อง!");
+        }
+
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.admin-sub').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-content-' + tabId).style.display = 'block';
+            document.getElementById('ad-' + tabId).classList.add('active');
+        }
+
+        function renderStore() {
+            let grid = document.getElementById('store-grid');
+            let html = "";
+            products.forEach(p => {
+                let isSold = p.status === "ขายแล้ว";
+                html += `
+                    <div class="card">
+                        <img class="card-banner-img" src="${p.img}">
+                        <div class="card-content">
+                            <div class="card-title">${p.title}</div>
+                            <ul class="card-specs">
+                                <li><span>เลเวลในเกม:</span> <strong>${p.lv}</strong></li>
+                                <li><span>ข้อมูลสำคัญ:</span> <strong>${p.fruit}</strong></li>
+                            </ul>
+                        </div>
+                        <div class="card-action">
+                            <div class="card-price">${p.price}฿</div>
+                            <button class="btn btn-buy" ${isSold ? 'disabled style="background:#444;"' : ''} onclick="buyProductEngine(${p.id})">
+                                ${isSold ? 'ขายแล้ว' : 'ซื้อสินค้า ⚡'}
+                            </button>
+                        </div>
+                    </div>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        function buyProductEngine(id) {
+            if(!currentUser) return alert("กรุณาเข้าสู่ระบบก่อนซื้อครับ");
+            let p = products.find(item => item.id === id);
+            if(p.status === "ขายแล้ว") return;
+
+            if(currentUser.credit < p.price) return alert("❌ ยอดเงินไม่พอ! กรุณาเติมเงินผ่านซองอั่งเปาหรือโค้ดรับเงินฟรี");
+
+            currentUser.credit -= p.price;
+            stats.salesToday += p.price;
+            stats.salesMonth += p.price;
+            stats.profit += Math.floor(p.price * 0.5);
+            stats.bestSeller = p.title;
+            p.status = "ขายแล้ว";
+
+            updateWalletUI();
+            
+            let alertBox = document.getElementById('delivery-box');
+            document.getElementById('delivery-code').innerText = `📦 จัดส่งออเดอร์สำเร็จ!\n👤 ไอดีผู้ใช้: ${p.user}\n🔑 รหัสผ่านเข้าเกม: ${p.pass}`;
+            alertBox.style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            orderLogs.unshift({ id: "TX-" + Math.floor(Math.random()*8999+1000), user: currentUser.username, title: p.title, price: p.price });
+            renderStore();
+            renderAdminData();
+        }
+
+        function renderAdminData() {
+            document.getElementById('stat-sales-today').innerText = stats.salesToday + " ฿";
+            document.getElementById('stat-sales-month').innerText = stats.salesMonth + " ฿";
+            document.getElementById('stat-profit').innerText = stats.profit + " ฿";
+            document.getElementById('stat-users-count').innerText = registeredUsers.length + " คน";
+            document.getElementById('stat-best-seller').innerText = stats.bestSeller;
+
+            let html = "";
+            orderLogs.forEach(o => {
+                html += `<tr><td><strong>#${o.id}</strong></td><td>${o.user}</td><td>${o.title}</td><td style="color:var(--success); font-weight:bold;">${o.price}฿</td><td>จัดส่งสำเร็จ ✅</td></tr>`;
+            });
+            document.getElementById('admin-orders-table').innerHTML = html ? html : "<tr><td colspan='5' style='text-align:center;'>ยังไม่มีรายการสั่งซื้อ</td></tr>";
+
+            let uHtml = "";
+            registeredUsers.forEach(u => {
+                uHtml += `<tr>
+                    <td>#${u.id}</td>
+                    <td><strong>${u.username}</strong></td>
+                    <td style="color:var(--warning); font-weight:bold;">${u.credit} ฿</td>
+                    <td>
+                        <button class="btn" style="background:var(--success); color:#000; padding:2px 6px; font-size:10px;" onclick="adjustUserMoney(${u.id}, 100)">+100</button>
+                        <button class="btn" style="background:var(--danger); padding:2px 6px; font-size:10px;" onclick="adjustUserMoney(${u.id}, -100)">-100</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" style="padding:2px 6px; font-size:10px;" onclick="deleteUserAccount(${u.id})">❌ ลบบัญชี</button>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('admin-users-table').innerHTML = uHtml;
+        }
+
+        function adjustUserMoney(userId, amount) {
+            let u = registeredUsers.find(item => item.id === userId);
+            if(u) {
+                u.credit += amount;
+                if(u.credit < 0) u.credit = 0;
+                if(currentUser && currentUser.id === u.id) updateWalletUI();
+                alert(`💰 ปรับเครดิตคุณ ${u.username} เป็นยอด ${u.credit} บาท`);
+                renderAdminData();
+            }
+        }
+
+        function deleteUserAccount(userId) {
+            if(confirm("⚠️ ลบบัญชีลูกค้ารายนี้ออกจากระบบ?")) {
+                registeredUsers = registeredUsers.filter(u => u.id !== userId);
+                alert("🗑️ ลบบัญชีเสร็จสิ้น!");
+                renderAdminData();
+            }
+        }
+
+        function addNewProduct() {
+            let title = document.getElementById('in-title').value;
+            let price = Number(document.getElementById('in-price').value);
+            let img = document.getElementById('in-img').value;
+            let lv = document.getElementById('in-lv').value;
+            let fruit = document.getElementById('in-fruit').value;
+            let user = document.getElementById('in-user').value;
+            let pass = document.getElementById('in-pass').value;
+
+            if(!title || !user || !pass) return alert("❌ โปรดกรอกข้อมูลให้ครบ");
+
+            products.unshift({ id: Date.now(), title, price, img, lv, fruit, user, pass });
+            alert("📦 เพิ่มสต็อกสินค้าสำเร็จ!");
+            renderStore();
+            switchAdminTab('t1');
+            switchPage('store');
+        }
+
+        function saveWheelRates() {
+            wheelConfig[0].name = document.getElementById('w-item-1').value;
+            wheelConfig[0].img = document.getElementById('w-img-1').value;
+            wheelConfig[0].rate = Number(document.getElementById('w-rate-1').value);
+
+            wheelConfig[1].name = document.getElementById('w-item-2').value;
+            wheelConfig[1].img = document.getElementById('w-img-2').value;
+            wheelConfig[1].rate = Number(document.getElementById('w-rate-2').value);
+
+            wheelConfig[2].name = document.getElementById('w-item-3').value;
+            wheelConfig[2].img = document.getElementById('w-img-3').value;
+            wheelConfig[2].rate = Number(document.getElementById('w-rate-3').value);
+
+            alert("🎡 อัปเดตเรทและรูปภาพวงล้อเรียบร้อย!");
+        }
+
+        function spinWheelEngine() {
+            if(!currentUser) return alert("กรุณาเข้าสู่ระบบก่อนครับ");
+            if(currentUser.credit < 50) return alert("❌ ยอดเงินไม่พอ (ใช้ 50 ฿)");
+
+            currentUser.credit -= 50;
+            updateWalletUI();
+            
+            let display = document.getElementById('wheel-display');
+            let imgDisplay = document.getElementById('wheel-prize-img');
+            
+            display.innerText = "⏳ กำลังสุ่ม...";
+            imgDisplay.style.display = 'none';
+
+            setTimeout(() => {
+                let rand = Math.floor(Math.random() * 100) + 1;
+                let prize = wheelConfig[0];
+
+                if (rand <= wheelConfig[2].rate) {
+                    prize = wheelConfig[2];
+                } else if (rand <= (wheelConfig[2].rate + wheelConfig[1].rate)) {
+                    prize = wheelConfig[1];
+                }
+
+                display.innerText = prize.name;
+                imgDisplay.src = prize.img;
+                imgDisplay.style.display = 'block';
+
+                alert(`🎉 คุณได้รับ "${prize.name}"`);
+                orderLogs.unshift({ id: "WHL-" + Math.floor(Math.random()*900+100), user: currentUser.username, title: `สุ่มวงล้อ: ได้รับ ${prize.name}`, price: 50 });
+                renderAdminData();
+            }, 1200);
+        }
+
+        function updateMarquee() {
+            let txt = document.getElementById('admin-marquee-input').value;
+            document.getElementById('web-marquee').innerText = txt;
+            alert("✅ อัปเดตประกาศเรียบร้อย!");
+        }
+
+        function changeAdminPassword() {
+            let newPass = document.getElementById('admin-new-pass').value.trim();
+            if(newPass.length < 4) return alert("❌ รหัสผ่านหลังบ้านสั้นเกินไป!");
+            adminSecretPassword = newPass;
+            alert(`🔐 อัปเดตรหัสหลังบ้านเป็น [ ${adminSecretPassword} ] เรียบร้อย!`);
+        }
+    </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
